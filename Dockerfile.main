@@ -8,4 +8,4 @@ COPY . .
 
 RUN go build -o main .
 
-CMD sh -c "go run main.go"
+CMD sh -c "sleep 20 && go run main.go"

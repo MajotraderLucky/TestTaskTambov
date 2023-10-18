@@ -1,17 +1,33 @@
 version: '3'
 services:
-  rangebot:
+  db:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.db
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+  assembling:
+    build:
+      context: .
+      dockerfile: Dockerfile.main
     ports:
       - 8080:8080
+    depends_on:
+      - db
     volumes:
-    - ./logs:/app/logs
+      - ./logs:/app/logs
     environment:
       - TZ=Europe/Moscow
     networks:
-      - tambovnetwork
+      - mynetwork
+
+volumes:
+  db_data:
 
 networks:
-  tambovnetwork:
+  mynetwork:
