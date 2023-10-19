@@ -14,3 +14,38 @@
 2023/10/19 02:40:58 
 2023/10/19 02:40:58 -------------------------------------------------------
 2023/10/19 02:40:58 Hello, Tambov!
+2023/10/19 02:51:16 
+2023/10/19 02:51:16 -------------------------------------------------------
+2023/10/19 02:51:16 Hello, Tambov!
+2023/10/19 02:51:16 Hello models!
+2023/10/19 05:10:45 -------------------------------------------------------
+2023/10/19 05:10:45 Hello, Tambov!
+2023/10/19 05:10:45 >>> BEGIN
+2023/10/19 05:10:45 <<< BEGIN 60.167907ms: dial tcp 172.16.103.150:3306: connect: connection refused
+2023/10/19 05:10:45 dial tcp 172.16.103.150:3306: connect: connection refused
+2023/10/19 05:13:31 -------------------------------------------------------
+2023/10/19 05:13:31 Hello, Tambov!
+2023/10/19 05:13:31 >>> BEGIN
+2023/10/19 05:13:31 <<< BEGIN 5.623568ms
+2023/10/19 05:13:31 >>> INSERT INTO `news` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`]
+2023/10/19 05:13:31 <<< INSERT INTO `news` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`] 1.182392ms: Error 1146 (42S02): Table 'mydb.news' doesn't exist
+2023/10/19 05:13:31 >>> ROLLBACK
+2023/10/19 05:13:31 <<< ROLLBACK 104.903µs
+2023/10/19 05:13:31 Error 1146 (42S02): Table 'mydb.news' doesn't exist
+2023/10/19 05:17:54 -------------------------------------------------------
+2023/10/19 05:17:54 Hello, Tambov!
+2023/10/19 05:17:54 >>> BEGIN
+2023/10/19 05:17:54 <<< BEGIN 4.72305ms
+2023/10/19 05:17:54 >>> INSERT INTO `news` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`]
+2023/10/19 05:17:54 <<< INSERT INTO `news` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`] 1.440669ms: Error 1146 (42S02): Table 'mydb.news' doesn't exist
+2023/10/19 05:17:54 >>> ROLLBACK
+2023/10/19 05:17:54 <<< ROLLBACK 81.373µs
+2023/10/19 05:17:54 Error 1146 (42S02): Table 'mydb.news' doesn't exist
+2023/10/19 05:50:20 -------------------------------------------------------
+2023/10/19 05:50:20 Hello, Tambov!
+2023/10/19 05:50:20 >>> BEGIN
+2023/10/19 05:50:21 <<< BEGIN 4.661917ms
+2023/10/19 05:50:21 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`]
+2023/10/19 05:50:21 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`] 6.160914ms
+2023/10/19 05:50:21 >>> COMMIT
+2023/10/19 05:50:21 <<< COMMIT 22.100989ms

@@ -44,3 +44,11 @@ ALTER TABLE `NewsCategories`
 --
 ALTER TABLE `News`
   MODIFY `Id` bigint NOT NULL AUTO_INCREMENT;
+
+-- --------------------------------------------------------
+
+--
+-- CONSTRAINT для таблицы `NewsCategories`
+--
+ALTER TABLE `NewsCategories`
+  ADD CONSTRAINT `NewsCategories_fk0` FOREIGN KEY (`NewsId`) REFERENCES `News` (`Id`) ON DELETE CASCADE;
