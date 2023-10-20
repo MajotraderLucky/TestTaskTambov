@@ -121,22 +121,18 @@ func setupApiRoutes(app *fiber.App, db *reform.DB) {
 			news.Content = input.Content
 		}
 
-		// Удаление старых связей с категориями
-		_, err = db.DeleteFrom(models.NewsCategoryTable, "news_id", id)
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news")
-		}
-
-		// Создание новых категорий
-		for _, category := range input.Categories {
-			newCategory := &models.NewsCategory{
-				NewsID:     id, // ID новой новости
-				CategoryID: category,
+		// Обновление категорий
+		for _, categoryID := range input.Categories {
+			// Создать новую связь
+			newsCategory := &models.NewsCategory{
+				NewsID:     id,
+				CategoryID: categoryID,
 			}
 
-			err = db.Insert(newCategory)
+			// Добавить связь в базу данных
+			err := db.Insert(newsCategory)
 			if err != nil {
-				return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news categories")
+				return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 			}
 		}
 
@@ -145,5 +141,49 @@ func setupApiRoutes(app *fiber.App, db *reform.DB) {
 		}
 
 		return c.JSON(news)
+	})
+
+	// Обновление категорий новости
+	app.Get("/categories/:id", func(c *fiber.Ctx) error {
+		// Получить ID новости
+		id, err := strconv.ParseInt(c.Params("id"), 10, 64)
+		if err != nil {
+			return err
+		}
+
+		// Получить входные данные
+		var input []int
+		if err := c.BodyParser(&input); err != nil {
+			return err
+		}
+
+		// Обновление категорий новости
+		for _, categoryID := range input {
+			// Создать новую связь
+			var newCategory = &models.NewsCategory{
+				NewsID:     id,
+				CategoryID: int64(categoryID),
+			}
+
+			// Добавить связь в базу данных
+			err := db.Insert(newCategory)
+			if err != nil {
+				return err
+			}
+		}
+
+		// Удалить старые связи
+		_, err = db.DeleteFrom(models.NewsCategoryTable, "news_id", id)
+		if err != nil {
+			return err
+		}
+
+		// Обработка ошибок
+		if err != nil {
+			return err
+		}
+
+		// Возврат значения
+		return nil
 	})
 }

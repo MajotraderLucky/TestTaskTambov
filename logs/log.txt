@@ -64,3 +64,17 @@
 2023/10/20 05:08:31 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.756006ms
 2023/10/20 05:08:31 >>> COMMIT
 2023/10/20 05:08:31 <<< COMMIT 12.39992ms
+2023/10/20 06:50:16 -------------------------------------------------------
+2023/10/20 06:50:16 >>> BEGIN
+2023/10/20 06:50:16 <<< BEGIN 6.339109ms
+2023/10/20 06:50:16 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/20 06:50:16 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.610655ms
+2023/10/20 06:50:16 >>> COMMIT
+2023/10/20 06:50:16 <<< COMMIT 14.24229ms
+2023/10/20 06:57:48 -------------------------------------------------------
+2023/10/20 06:57:48 >>> BEGIN
+2023/10/20 06:57:48 <<< BEGIN 5.684148ms
+2023/10/20 06:57:48 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/20 06:57:48 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.50332ms
+2023/10/20 06:57:48 >>> COMMIT
+2023/10/20 06:57:48 <<< COMMIT 9.713439ms
