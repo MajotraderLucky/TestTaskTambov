@@ -11,6 +11,7 @@ import (
 	"gopkg.in/reform.v1/dialects/mysql"
 
 	"github.com/MajotraderLucky/Utils/logger"
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
@@ -26,8 +27,6 @@ func main() {
 	logger.SetLogger()
 
 	logger.LogLine()
-
-	log.Println("Hello, Tambov!")
 
 	db, err := sql.Open("mysql", "myuser:mypassword@tcp(db:3306)/mydb")
 	if err != nil {
@@ -69,16 +68,10 @@ func createNewsWithCategories(session *reform.DB, newsData models.NewsData) erro
 		return err
 	}
 
-	// Пройти по списку категорий и создать связи для новости
-	for _, category := range newsData.Categories {
-		intCat, err := strconv.ParseInt(category, 10, 64)
-		if err != nil {
-			tx.Rollback()
-			return err
-		}
-
+	for _, intCat := range newsData.Categories {
+		// создание связей с категорией
 		newsCategory := &models.NewsCategory{
-			NewsID:     news.ID,
+			NewsID:     int64(news.ID),
 			CategoryID: intCat,
 		}
 
@@ -92,6 +85,65 @@ func createNewsWithCategories(session *reform.DB, newsData models.NewsData) erro
 	if err := tx.Commit(); err != nil {
 		return err
 	}
-
 	return nil
+}
+
+func setupApiRoutes(app *fiber.App, db *reform.DB) {
+	// Обновить новость по id
+	app.Post("/edit/:id", func(c *fiber.Ctx) error {
+		// Принимаем входные данные
+		var input models.NewsData
+
+		if err := c.BodyParser(&input); err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+		}
+
+		// Преобразование строкового ID в int64
+		id, err := strconv.ParseInt(c.Params("id"), 10, 64)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Invalid ID")
+		}
+
+		// Находим существующую запись
+		existingEntity, err := db.FindOneFrom(models.NewsTable, "id", id)
+		if err != nil {
+			return c.Status(fiber.StatusNotFound).SendString("News not found")
+		}
+
+		news := existingEntity.(*models.NewsData)
+
+		// Updating news
+		if input.Title != "" {
+			news.Title = input.Title
+		}
+
+		if input.Content != "" {
+			news.Content = input.Content
+		}
+
+		// Удаление старых связей с категориями
+		_, err = db.DeleteFrom(models.NewsCategoryTable, "news_id", id)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news")
+		}
+
+		// Создание новых категорий
+		for _, category := range input.Categories {
+			newCategory := &models.NewsCategory{
+				NewsID:     id, // ID новой новости
+				CategoryID: category,
+			}
+
+			err = db.Insert(newCategory)
+			if err != nil {
+				return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news categories")
+			}
+		}
+
+		if err := db.Update(news); err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news")
+		}
+
+		return c.JSON(news)
+	})
 }

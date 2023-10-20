@@ -49,3 +49,18 @@
 2023/10/19 05:50:21 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`] 6.160914ms
 2023/10/19 05:50:21 >>> COMMIT
 2023/10/19 05:50:21 <<< COMMIT 22.100989ms
+2023/10/20 04:01:22 -------------------------------------------------------
+2023/10/20 04:01:22 >>> BEGIN
+2023/10/20 04:01:22 <<< BEGIN 5.80067ms
+2023/10/20 04:01:22 >>> INSERT INTO `news` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/20 04:01:22 <<< INSERT INTO `news` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 1.374863ms: Error 1146 (42S02): Table 'mydb.news' doesn't exist
+2023/10/20 04:01:22 >>> ROLLBACK
+2023/10/20 04:01:22 <<< ROLLBACK 97.935µs
+2023/10/20 04:01:22 Error 1146 (42S02): Table 'mydb.news' doesn't exist
+2023/10/20 05:08:31 -------------------------------------------------------
+2023/10/20 05:08:31 >>> BEGIN
+2023/10/20 05:08:31 <<< BEGIN 6.097976ms
+2023/10/20 05:08:31 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/20 05:08:31 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.756006ms
+2023/10/20 05:08:31 >>> COMMIT
+2023/10/20 05:08:31 <<< COMMIT 12.39992ms
