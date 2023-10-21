@@ -13,6 +13,19 @@ services:
     networks:
       - mynetwork
 
+  fiberserver:
+    build:
+      context: ./fiberserver
+      dockerfile: Dockerfile.fiber
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      - TZ=Europe/Moscow
+    networks:
+      - mynetwork
+
   assembling:
     build:
       context: .
@@ -20,7 +33,7 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - db
+      - fiberserver
     volumes:
       - ./logs:/app/logs
     environment:
