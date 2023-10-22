@@ -5,6 +5,7 @@ import (
 	"log"
 	"testtasktambov/models"
 	"testtasktambov/newsdb"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"gopkg.in/reform.v1"
@@ -31,6 +32,18 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Set the maximum number of concurrently open connections (e.g. 10).
+	// If <= 0, then there is no limit on the number of open connections.
+	db.SetMaxOpenConns(10)
+
+	// Set the maximum number of idle connections in the connection pool (e.g. 5).
+	// If <= 0, no idle connections are retained.
+	db.SetMaxIdleConns(5)
+
+	// Set the maximum amount of time a connection may be reused (e.g. 30 minutes).
+	// Expired connections may be closed lazily before reuse.
+	// If <= 0, connections are reused forever.
+	db.SetConnMaxLifetime(time.Duration(30) * time.Minute)
 	defer db.Close()
 
 	session := reform.NewDB(db, mysql.Dialect, reform.NewPrintfLogger(log.Printf))
