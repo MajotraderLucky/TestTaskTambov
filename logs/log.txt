@@ -1,53 +1,3 @@
-2023/10/19 05:17:54 -------------------------------------------------------
-2023/10/19 05:17:54 Hello, Tambov!
-2023/10/19 05:17:54 >>> BEGIN
-2023/10/19 05:17:54 <<< BEGIN 4.72305ms
-2023/10/19 05:17:54 >>> INSERT INTO `news` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`]
-2023/10/19 05:17:54 <<< INSERT INTO `news` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`] 1.440669ms: Error 1146 (42S02): Table 'mydb.news' doesn't exist
-2023/10/19 05:17:54 >>> ROLLBACK
-2023/10/19 05:17:54 <<< ROLLBACK 81.373µs
-2023/10/19 05:17:54 Error 1146 (42S02): Table 'mydb.news' doesn't exist
-2023/10/19 05:50:20 -------------------------------------------------------
-2023/10/19 05:50:20 Hello, Tambov!
-2023/10/19 05:50:20 >>> BEGIN
-2023/10/19 05:50:21 <<< BEGIN 4.661917ms
-2023/10/19 05:50:21 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`]
-2023/10/19 05:50:21 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [0, `Sample Title`, `Sample Content`] 6.160914ms
-2023/10/19 05:50:21 >>> COMMIT
-2023/10/19 05:50:21 <<< COMMIT 22.100989ms
-2023/10/20 04:01:22 -------------------------------------------------------
-2023/10/20 04:01:22 >>> BEGIN
-2023/10/20 04:01:22 <<< BEGIN 5.80067ms
-2023/10/20 04:01:22 >>> INSERT INTO `news` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
-2023/10/20 04:01:22 <<< INSERT INTO `news` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 1.374863ms: Error 1146 (42S02): Table 'mydb.news' doesn't exist
-2023/10/20 04:01:22 >>> ROLLBACK
-2023/10/20 04:01:22 <<< ROLLBACK 97.935µs
-2023/10/20 04:01:22 Error 1146 (42S02): Table 'mydb.news' doesn't exist
-2023/10/20 05:08:31 -------------------------------------------------------
-2023/10/20 05:08:31 >>> BEGIN
-2023/10/20 05:08:31 <<< BEGIN 6.097976ms
-2023/10/20 05:08:31 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
-2023/10/20 05:08:31 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.756006ms
-2023/10/20 05:08:31 >>> COMMIT
-2023/10/20 05:08:31 <<< COMMIT 12.39992ms
-2023/10/20 06:50:16 -------------------------------------------------------
-2023/10/20 06:50:16 >>> BEGIN
-2023/10/20 06:50:16 <<< BEGIN 6.339109ms
-2023/10/20 06:50:16 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
-2023/10/20 06:50:16 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.610655ms
-2023/10/20 06:50:16 >>> COMMIT
-2023/10/20 06:50:16 <<< COMMIT 14.24229ms
-2023/10/20 06:57:48 -------------------------------------------------------
-2023/10/20 06:57:48 >>> BEGIN
-2023/10/20 06:57:48 <<< BEGIN 5.684148ms
-2023/10/20 06:57:48 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
-2023/10/20 06:57:48 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 5.50332ms
-2023/10/20 06:57:48 >>> COMMIT
-2023/10/20 06:57:48 <<< COMMIT 9.713439ms
-2023/10/21 02:47:05 -------------------------------------------------------
-2023/10/21 02:47:05 >>> BEGIN
-2023/10/21 02:47:05 <<< BEGIN 100.499841ms: dial tcp 172.18.0.2:3306: connect: connection refused
-2023/10/21 02:47:05 dial tcp 172.18.0.2:3306: connect: connection refused
 2023/10/21 03:03:17 -------------------------------------------------------
 2023/10/21 03:03:17 >>> BEGIN
 2023/10/21 03:03:17 <<< BEGIN 31.664996ms: dial tcp: lookup db on 172.16.102.2:53: no such host
@@ -97,4 +47,54 @@
 2023/10/22 14:29:05 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 124.969219ms
 2023/10/22 14:29:05 >>> COMMIT
 2023/10/22 14:29:06 <<< COMMIT 97.146339ms
+
+2023/10/23 10:15:21 -------------------------------------------------------
+2023/10/23 10:15:21 Failed to load news from file: open news.json: no such file or directory
+2023/10/23 10:17:53 -------------------------------------------------------
+2023/10/23 10:17:53 >>> BEGIN
+2023/10/23 10:17:53 <<< BEGIN 107.330031ms
+2023/10/23 10:17:53 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [1, `Первая новость`, `Содержимое первой новости`]
+2023/10/23 10:17:53 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [1, `Первая новость`, `Содержимое первой новости`] 211.836485ms: Error 1062 (23000): Duplicate entry '1' for key 'News.PRIMARY'
+2023/10/23 10:17:53 Failed to save newsData NewsData {ID: 1, Title: Первая новость, Content: Содержимое первой новости}. Error: Error 1062 (23000): Duplicate entry '1' for key 'News.PRIMARY'
+2023/10/23 10:17:53 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [2, `Вторая новость`, `Содержимое второй новости`]
+2023/10/23 10:17:53 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [2, `Вторая новость`, `Содержимое второй новости`] 1.756036ms: Error 1062 (23000): Duplicate entry '2' for key 'News.PRIMARY'
+2023/10/23 10:17:53 Failed to save newsData NewsData {ID: 2, Title: Вторая новость, Content: Содержимое второй новости}. Error: Error 1062 (23000): Duplicate entry '2' for key 'News.PRIMARY'
+2023/10/23 10:17:53 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [3, `Третья новость`, `Содержимое третьей новости`]
+2023/10/23 10:17:53 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [3, `Третья новость`, `Содержимое третьей новости`] 1.335598ms: Error 1062 (23000): Duplicate entry '3' for key 'News.PRIMARY'
+2023/10/23 10:17:53 Failed to save newsData NewsData {ID: 3, Title: Третья новость, Content: Содержимое третьей новости}. Error: Error 1062 (23000): Duplicate entry '3' for key 'News.PRIMARY'
+2023/10/23 10:17:53 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [4, `Четвертая новость`, `Содержимое четвертой новости`]
+2023/10/23 10:17:53 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [4, `Четвертая новость`, `Содержимое четвертой новости`] 1.276829ms: Error 1062 (23000): Duplicate entry '4' for key 'News.PRIMARY'
+2023/10/23 10:17:53 Failed to save newsData NewsData {ID: 4, Title: Четвертая новость, Content: Содержимое четвертой новости}. Error: Error 1062 (23000): Duplicate entry '4' for key 'News.PRIMARY'
+2023/10/23 10:17:53 >>> INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [5, `Пятая новость`, `Содержимое пятой новости`]
+2023/10/23 10:17:53 <<< INSERT INTO `News` (`id`, `title`, `content`) VALUES (?, ?, ?) [5, `Пятая новость`, `Содержимое пятой новости`] 1.578974ms: Error 1062 (23000): Duplicate entry '5' for key 'News.PRIMARY'
+2023/10/23 10:17:53 Failed to save newsData NewsData {ID: 5, Title: Пятая новость, Content: Содержимое пятой новости}. Error: Error 1062 (23000): Duplicate entry '5' for key 'News.PRIMARY'
+2023/10/23 10:17:53 >>> ROLLBACK
+2023/10/23 10:17:53 <<< ROLLBACK 1.144912ms
+2023/10/23 10:17:53 Failed to load news from file: Error 1062 (23000): Duplicate entry '1' for key 'News.PRIMARY'; Error 1062 (23000): Duplicate entry '2' for key 'News.PRIMARY'; Error 1062 (23000): Duplicate entry '3' for key 'News.PRIMARY'; Error 1062 (23000): Duplicate entry '4' for key 'News.PRIMARY'; Error 1062 (23000): Duplicate entry '5' for key 'News.PRIMARY'
+2023/10/23 10:27:46 -------------------------------------------------------
+2023/10/23 10:27:46 >>> BEGIN
+2023/10/23 10:27:46 <<< BEGIN 180.772665ms
+2023/10/23 10:27:46 >>> UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Первая новость`, `Содержимое первой новости`, 1]
+2023/10/23 10:27:46 <<< UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Первая новость`, `Содержимое первой новости`, 1] 96.849148ms
+2023/10/23 10:27:46 Successfully saved or updated newsData NewsData {ID: 1, Title: Первая новость, Content: Содержимое первой новости}.
+2023/10/23 10:27:46 >>> UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Вторая новость`, `Содержимое второй новости`, 2]
+2023/10/23 10:27:46 <<< UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Вторая новость`, `Содержимое второй новости`, 2] 526.629µs
+2023/10/23 10:27:46 Successfully saved or updated newsData NewsData {ID: 2, Title: Вторая новость, Content: Содержимое второй новости}.
+2023/10/23 10:27:46 >>> UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Третья новость`, `Содержимое третьей новости`, 3]
+2023/10/23 10:27:46 <<< UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Третья новость`, `Содержимое третьей новости`, 3] 409.471µs
+2023/10/23 10:27:46 Successfully saved or updated newsData NewsData {ID: 3, Title: Третья новость, Content: Содержимое третьей новости}.
+2023/10/23 10:27:46 >>> UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Четвертая новость`, `Содержимое четвертой новости`, 4]
+2023/10/23 10:27:46 <<< UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Четвертая новость`, `Содержимое четвертой новости`, 4] 371.866µs
+2023/10/23 10:27:46 Successfully saved or updated newsData NewsData {ID: 4, Title: Четвертая новость, Content: Содержимое четвертой новости}.
+2023/10/23 10:27:46 >>> UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Пятая новость`, `Содержимое пятой новости`, 5]
+2023/10/23 10:27:46 <<< UPDATE `News` SET `title` = ?, `content` = ? WHERE `id` = ? [`Пятая новость`, `Содержимое пятой новости`, 5] 369.865µs
+2023/10/23 10:27:46 Successfully saved or updated newsData NewsData {ID: 5, Title: Пятая новость, Content: Содержимое пятой новости}.
+2023/10/23 10:27:46 >>> COMMIT
+2023/10/23 10:27:46 <<< COMMIT 135.801461ms
+2023/10/23 10:27:46 >>> BEGIN
+2023/10/23 10:27:46 <<< BEGIN 583.897µs
+2023/10/23 10:27:46 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/23 10:27:46 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 1.546562ms
+2023/10/23 10:27:46 >>> COMMIT
+2023/10/23 10:27:46 <<< COMMIT 110.019846ms
 

@@ -70,9 +70,9 @@ var NewsCategoryTable = NewsCategoryTableType{}
 var Table_name = "News"
 
 type NewsData struct {
-	ID         int64
-	Title      string
-	Content    string
+	ID         int64  `reform:"id,pk"`
+	Title      string `reform:"title"`
+	Content    string `reform:"content"`
 	Categories []int64
 }
 

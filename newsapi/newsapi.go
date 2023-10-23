@@ -1,10 +1,14 @@
 package newsapi
 
 import (
+	"encoding/json"
+	"log"
+	"os"
 	"strconv"
 	"testtasktambov/models"
 
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/multierr"
 	"gopkg.in/reform.v1"
 )
 
@@ -77,6 +81,12 @@ func SetupApiRoutes(app *fiber.App, db *reform.DB) {
 			return err
 		}
 
+		// Удалить старые связи
+		_, err = db.DeleteFrom(models.NewsCategoryTable, "news_id", id)
+		if err != nil {
+			return err
+		}
+
 		// Обновление категорий новости
 		for _, categoryID := range input {
 			// Создать новую связь
@@ -92,18 +102,79 @@ func SetupApiRoutes(app *fiber.App, db *reform.DB) {
 			}
 		}
 
-		// Удалить старые связи
-		_, err = db.DeleteFrom(models.NewsCategoryTable, "news_id", id)
-		if err != nil {
-			return err
-		}
-
-		// Обработка ошибок
-		if err != nil {
-			return err
-		}
-
 		// Возврат значения
 		return nil
+	})
+}
+
+type NewsJson struct {
+	ID      int64  `json:"Id"`
+	Title   string `json:"Title"`
+	Content string `json:"Content"`
+}
+
+// func LoadNewsFromFile(filePath string, db *reform.DB) error {
+// 	file, err := os.ReadFile(filePath)
+// 	if err != nil {
+// 		return err
+// 	}
+
+// 	var newsJsonArr []NewsJson
+// 	err = json.Unmarshal(file, &newsJsonArr)
+// 	if err != nil {
+// 		return err
+// 	}
+
+// 	return db.InTransaction(func(tx *reform.TX) error {
+// 		var multiErr error
+// 		for _, n := range newsJsonArr {
+// 			newsData := &models.NewsData{
+// 				ID:      n.ID,
+// 				Title:   n.Title,
+// 				Content: n.Content,
+// 			}
+
+// 			if err := tx.Insert(newsData); err != nil {
+// 				multiErr = multierr.Combine(multiErr, err)
+// 				log.Printf("Failed to save newsData %v. Error: %v\n", newsData, err)
+// 				continue
+// 			}
+
+// 			log.Printf("Successfully saved newsData %v.\n", newsData)
+// 		}
+// 		return multiErr
+// 	})
+// }
+
+func LoadNewsFromFile(filePath string, db *reform.DB) error {
+	file, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	var newsJsonArr []NewsJson
+	err = json.Unmarshal(file, &newsJsonArr)
+	if err != nil {
+		return err
+	}
+
+	return db.InTransaction(func(tx *reform.TX) error {
+		var multiErr error
+		for _, n := range newsJsonArr {
+			newsData := &models.NewsData{
+				ID:      n.ID,
+				Title:   n.Title,
+				Content: n.Content,
+			}
+
+			if err := tx.Save(newsData); err != nil {
+				multiErr = multierr.Combine(multiErr, err)
+				log.Printf("Failed to save or update newsData %v. Error: %v\n", newsData, err)
+				continue
+			}
+
+			log.Printf("Successfully saved or updated newsData %v.\n", newsData)
+		}
+		return multiErr
 	})
 }
