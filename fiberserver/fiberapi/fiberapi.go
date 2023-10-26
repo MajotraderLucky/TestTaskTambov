@@ -1,12 +1,12 @@
-package newsapi
+package fiberapi
 
 import (
 	"encoding/json"
 	"log"
 	"os"
 	"strconv"
-	"testtasktambov/models"
 
+	"github.com/MajotraderLucky/TambovRepo/models.go"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/multierr"
 	"gopkg.in/reform.v1"
