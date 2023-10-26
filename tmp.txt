@@ -1,56 +1,6 @@
-package main
-
-import (
-	"log"
-	"your_project_path/newsapi"
-	"your_project_path/models"
-	"gopkg.in/reform.v1"
-	"gopkg.in/reform.v1/dialects/mysql"
-	"database/sql"
-	"time"
-)
-
-func main() {
-	logger := logger.Logger{}
-	err := logger.CreateLogsDir()
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = logger.OpenLogFile()
-	if err != nil {
-		log.Fatal(err)
-	}
-	logger.SetLogger()
-
-	logger.LogLine()
-
-	db, err := sql.Open("mysql", "myuser:mypassword@tcp(db:3306)/mydb")
-	if err != nil {
-		log.Fatal(err)
-	}
-	db.SetMaxOpenConns(10)
-	db.SetMaxIdleConns(5)
-	db.SetConnMaxLifetime(time.Duration(30) * time.Minute)
-	defer db.Close()
-
-	session := reform.NewDB(db, mysql.Dialect, reform.NewPrintfLogger(log.Printf))
-
-	// вызов функции LoadNewsFromFile
-	err = newsapi.LoadNewsFromFile("your_file_path.json", session)
-	if err != nil {
-		log.Fatalf("Failed to load news from file: %v", err)
-	}
-
-	// Define a news item and its categories
-	newsData := models.NewsData{
-		Title:   "Sample Title",
-		Content: "Sample Content",
-	}
-
-	// Create the news item and its categories
-	if err := newsdb.CreateNewsWithCategories(session, newsData); err != nil {
-		log.Fatal(err)
-	}
-
-	logger.CleanLogCountLines(100)
+connector, err := reform.NewTXFromInterface("myuser:mypassword@tcp(db:3306)/mydb", mysql.Dialect)
+if err != nil {
+    log.Fatal(err)
 }
+
+db := reform.NewDB(connector, mysql.Dialect, nil)

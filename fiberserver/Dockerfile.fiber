@@ -1,5 +1,5 @@
 # Используем базовый образ Golang
-FROM golang:1.17 AS build
+FROM golang:1.20 AS build
 
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Собираем бинарный файл приложения
-RUN go build -o main
+RUN go build -o fiberserver
 
 # ------------------------------------------
 
@@ -22,7 +22,7 @@ RUN go build -o main
 FROM gcr.io/distroless/base-debian10
 
 # Копируем бинарный файл из предыдущего этапа
-COPY --from=build /app/main /
+COPY --from=build /app/fiberserver /
 
 # Устанавливаем переменную окружения для порта сервера
 ENV PORT=3000
@@ -31,4 +31,4 @@ ENV PORT=3000
 EXPOSE $PORT
 
 # Запускаем сервер при старте контейнера
-CMD ["/main"]
+CMD ["/fiberserver"]

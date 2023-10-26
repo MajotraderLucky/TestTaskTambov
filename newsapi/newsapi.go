@@ -105,6 +105,23 @@ func SetupApiRoutes(app *fiber.App, db *reform.DB) {
 		// Возврат значения
 		return nil
 	})
+
+	app.Get("/list", func(c *fiber.Ctx) error {
+		// Получить все записи из базы данных
+		records, err := db.SelectAllFrom(models.NewsTable, "")
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
+
+		// Обход всех записей и преобразование их в нужный тип
+		newsList := make([]*models.NewsData, len(records))
+		for i, record := range records {
+			newsList[i] = record.(*models.NewsData)
+		}
+
+		// Отправить ответ клиенту
+		return c.JSON(newsList)
+	})
 }
 
 type NewsJson struct {
@@ -134,13 +151,13 @@ type NewsJson struct {
 // 				Content: n.Content,
 // 			}
 
-// 			if err := tx.Insert(newsData); err != nil {
+// 			if err := tx.Save(newsData); err != nil {
 // 				multiErr = multierr.Combine(multiErr, err)
-// 				log.Printf("Failed to save newsData %v. Error: %v\n", newsData, err)
+// 				log.Printf("Failed to save or update newsData %v. Error: %v\n", newsData, err)
 // 				continue
 // 			}
 
-// 			log.Printf("Successfully saved newsData %v.\n", newsData)
+// 			log.Printf("Successfully saved or updated newsData %v.\n", newsData)
 // 		}
 // 		return multiErr
 // 	})
@@ -161,19 +178,14 @@ func LoadNewsFromFile(filePath string, db *reform.DB) error {
 	return db.InTransaction(func(tx *reform.TX) error {
 		var multiErr error
 		for _, n := range newsJsonArr {
-			newsData := &models.NewsData{
-				ID:      n.ID,
-				Title:   n.Title,
-				Content: n.Content,
-			}
-
-			if err := tx.Save(newsData); err != nil {
+			_, err := tx.Exec(`INSERT INTO News (id, title, content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE title = ?, content = ?`,
+				n.ID, n.Title, n.Content, n.Title, n.Content)
+			if err != nil {
 				multiErr = multierr.Combine(multiErr, err)
-				log.Printf("Failed to save or update newsData %v. Error: %v\n", newsData, err)
-				continue
+				log.Printf("Failed to save or update newsData with ID %v. Error: %v\n", n.ID, err)
+			} else {
+				log.Printf("Successfully saved or updated newsData with ID %v.\n", n.ID)
 			}
-
-			log.Printf("Successfully saved or updated newsData %v.\n", newsData)
 		}
 		return multiErr
 	})
