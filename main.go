@@ -53,6 +53,12 @@ func main() {
 		log.Fatalf("Failed to load news from file: %v", err)
 	}
 
+	// Синхронизация новостей из файла с базой данных
+	err = newsapi.SyncNewsWithFileDel("news.json", session)
+	if err != nil {
+		log.Fatalf("Failed to sync news with file: %v", err)
+	}
+
 	// Define a news item and its categories
 	newsData := models.NewsData{
 		Title:   "Sample Title",

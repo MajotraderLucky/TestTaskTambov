@@ -176,3 +176,49 @@ func SetupApiRouteGetList(app *fiber.App, db *reform.DB) {
 		return c.JSON(newsList)
 	})
 }
+
+func SyncNewsWithFileDel(filePath string, db *reform.DB) error {
+	// Чтение новостей из файла
+	file, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	var newsJsonArr []NewsJson
+	err = json.Unmarshal(file, &newsJsonArr)
+	if err != nil {
+		return err
+	}
+
+	// Создание мапы новостей для быстрого поиска
+	newsMap := make(map[int64]NewsJson)
+	for _, news := range newsJsonArr {
+		newsMap[news.ID] = news
+	}
+
+	return db.InTransaction(func(tx *reform.TX) error {
+		// Загрузка всех новостей из базы данных
+		records, err := tx.SelectAllFrom(models.NewsTable, "")
+		if err != nil {
+			return err
+		}
+
+		var multiErr error
+		for _, record := range records {
+			news := record.(*models.NewsData)
+
+			// Проверка: есть ли новость из базы данных в загруженных из файла
+			if _, exists := newsMap[news.ID]; !exists {
+				err = tx.Delete(news)
+				if err != nil {
+					multiErr = multierr.Combine(multiErr, err)
+					log.Printf("Failed to delete news with ID %v. Error: %v\n", news.ID, err)
+				} else {
+					log.Printf("Successfully deleted news with ID %v.\n", news.ID)
+				}
+			}
+
+		}
+		return multiErr
+	})
+}
