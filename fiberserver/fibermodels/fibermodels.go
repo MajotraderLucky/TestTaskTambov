@@ -54,11 +54,11 @@ func (NewsCategoryTableType) Schema() string {
 }
 
 func (NewsCategoryTableType) Name() string {
-	return "news_categories"
+	return "NewsCategories"
 }
 
 func (NewsCategoryTableType) Columns() []string {
-	return []string{"news_id", "category_id"}
+	return []string{"NewsId", "category_id"}
 }
 
 func (NewsCategoryTableType) NewStruct() reform.Struct {
@@ -125,7 +125,7 @@ func (nd *NewsData) Table() reform.Table {
 }
 
 type NewsCategory struct {
-	NewsID     int64 `reform:"news_id"`
+	NewsID     int64 `reform:"NewsId"`
 	CategoryID int64 `reform:"category_id"`
 }
 

@@ -8,7 +8,7 @@ require (
 )
 
 require (
-	github.com/MajotraderLucky/TambovRepo v0.0.0-20231025145724-e4978ca4c1fc // indirect
+	github.com/MajotraderLucky/TambovRepo v0.0.0-20231027233927-f9b7ba56dee5 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/google/uuid v1.3.1 // indirect

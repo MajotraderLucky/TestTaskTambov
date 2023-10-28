@@ -1,5 +1,7 @@
 github.com/AlekSi/pointer v1.1.0 h1:SSDMPcXD9jSl8FPy9cRzoRaMJtm9g9ggGTxecRUbQoI=
 github.com/AlekSi/pointer v1.1.0/go.mod h1:y7BvfRI3wXPWKXEBhU71nbnIEEZX0QTSB2Bj48UJIZE=
+github.com/MajotraderLucky/TambovRepo v0.0.0-20231027220759-2723e570c5fb h1:OtZkecB1kAnq4vd+O5N/jhgyNcfsxWcfGuph2eJBeds=
+github.com/MajotraderLucky/TambovRepo v0.0.0-20231027220759-2723e570c5fb/go.mod h1:Mx5lGVQe3EyZRvVHGHWTPRsrgujM1JEwbqyUUGS+5pU=
 github.com/MajotraderLucky/Utils/logger v0.0.0-20231010233541-82621bc1a53d h1:uti3GIlWXtPQV/SfHDIz+9a/0RpxwNfX1KvdZYZRuTI=
 github.com/MajotraderLucky/Utils/logger v0.0.0-20231010233541-82621bc1a53d/go.mod h1:gF66a3jvej+jQ4ycfDRcVOGpFlhZ6tOlNBy90UsG+GY=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=

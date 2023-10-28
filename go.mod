@@ -11,6 +11,7 @@ require (
 )
 
 require (
+	github.com/MajotraderLucky/TambovRepo v0.0.0-20231027220759-2723e570c5fb // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/google/uuid v1.3.1 // indirect

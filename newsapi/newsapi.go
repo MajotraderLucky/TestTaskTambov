@@ -125,12 +125,13 @@ func SetupApiRoutes(app *fiber.App, db *reform.DB) {
 }
 
 type NewsJson struct {
-	ID      int64  `json:"Id"`
-	Title   string `json:"Title"`
-	Content string `json:"Content"`
+	ID       int64  `json:"Id"`
+	Title    string `json:"Title"`
+	Content  string `json:"Content"`
+	Category int64  `json:"Category"`
 }
 
-func LoadNewsFromFile(filePath string, db *reform.DB) error {
+func LoadNewsFromFileCat(filePath string, db *reform.DB) error {
 	file, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -145,7 +146,7 @@ func LoadNewsFromFile(filePath string, db *reform.DB) error {
 	return db.InTransaction(func(tx *reform.TX) error {
 		var multiErr error
 		for _, n := range newsJsonArr {
-			_, err := tx.Exec(`INSERT INTO News (id, title, content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE title = ?, content = ?`,
+			_, err := tx.Exec(`INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ?`,
 				n.ID, n.Title, n.Content, n.Title, n.Content)
 			if err != nil {
 				multiErr = multierr.Combine(multiErr, err)
@@ -153,7 +154,18 @@ func LoadNewsFromFile(filePath string, db *reform.DB) error {
 			} else {
 				log.Printf("Successfully saved or updated newsData with ID %v.\n", n.ID)
 			}
+
+			// Inserting or Updating NewsCategory junction table in your database
+			_, err = tx.Exec(`INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ?`,
+				n.ID, n.Category, n.Category)
+			if err != nil {
+				multiErr = multierr.Combine(multiErr, err)
+				log.Printf("Failed to save or update NewsCategory with NewsId %v and CategoryId %v. Error: %v\n", n.ID, n.Category, err)
+			} else {
+				log.Printf("Successfully saved or updated NewsCategory with NewsId %v and CategoryId %v.\n", n.ID, n.Category)
+			}
 		}
+
 		return multiErr
 	})
 }

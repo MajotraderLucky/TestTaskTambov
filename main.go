@@ -48,7 +48,7 @@ func main() {
 
 	session := reform.NewDB(db, mysql.Dialect, reform.NewPrintfLogger(log.Printf))
 
-	err = newsapi.LoadNewsFromFile("news.json", session)
+	err = newsapi.LoadNewsFromFileCat("news.json", session)
 	if err != nil {
 		log.Fatalf("Failed to load news from file: %v", err)
 	}

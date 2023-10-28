@@ -1,6 +1,46 @@
-connector, err := reform.NewTXFromInterface("myuser:mypassword@tcp(db:3306)/mydb", mysql.Dialect)
-if err != nil {
-    log.Fatal(err)
-}
+func LoadNewsFromFile(filePath string, db *reform.DB) error {
+	file, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
 
-db := reform.NewDB(connector, mysql.Dialect, nil)
+	var newsJsonArr []NewsJson
+	err = json.Unmarshal(file, &newsJsonArr)
+	if err != nil {
+		return err
+	}
+
+	return db.InTransaction(func(tx *reform.TX) error {
+		var multiErr error
+		for _, n := range newsJsonArr {
+			news := &models.NewsData{
+				ID:      n.ID,
+				Title:   n.Title,
+				Content: n.Content,
+			}
+
+			err := tx.Save(news)
+			if err != nil {
+				multiErr = multierr.Combine(multiErr, err)
+				log.Printf("Failed to save or update newsData with ID %v. Error: %v\n", n.ID, err)
+			} else {
+				log.Printf("Successfully saved or updated newsData with ID %v.\n", n.ID)
+				for _, cat := range n.Categories {
+					newsCategory := &models.NewsCategory{
+						NewsID:     n.ID,
+						CategoryID: cat,
+					}
+
+					err := tx.Save(newsCategory)
+					if err != nil {
+						multiErr = multierr.Combine(multiErr, err)
+						log.Printf("Failed to save news_categories with news ID %v and category ID %v. Error: %v\n", n.ID, cat, err)
+					} else {
+						log.Printf("Successfully saved news_categories with news ID %v and category ID %v.\n", n.ID, cat)
+					}
+				}
+			}
+		}
+		return multiErr
+	})
+}

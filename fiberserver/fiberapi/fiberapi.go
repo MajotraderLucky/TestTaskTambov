@@ -169,7 +169,20 @@ func SetupApiRouteGetList(app *fiber.App, db *reform.DB) {
 		// Обход всех записей и преобразование их в нужный тип
 		newsList := make([]*models.NewsData, len(records))
 		for i, record := range records {
-			newsList[i] = record.(*models.NewsData)
+			news := record.(*models.NewsData)
+			newsList[i] = news
+
+			// Запрос категорий для каждой новости
+			categories, err := db.FindAllFrom(models.NewsCategoryTable, "NewsId", news.ID)
+			if err != nil {
+				log.Printf("Failed to load categories for news with ID %v. Error: %v\n", news.ID, err)
+				continue
+			}
+
+			for _, cat := range categories {
+				category := cat.(*models.NewsCategory)
+				newsList[i].Categories = append(newsList[i].Categories, category.CategoryID)
+			}
 		}
 
 		// Отправить ответ клиенту
