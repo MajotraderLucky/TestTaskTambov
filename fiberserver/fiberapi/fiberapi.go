@@ -203,3 +203,39 @@ func SetupApiRouteGetList(app *fiber.App, db *reform.DB) {
 		return c.JSON(response)
 	})
 }
+
+func SetupApiRouteEdit(app *fiber.App, db *reform.DB) {
+	app.Post("/edit/:id", func(c *fiber.Ctx) error {
+		id, err := strconv.ParseInt(c.Params("id"), 10, 64)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Invalid ID")
+		}
+
+		var news NewsJson
+		err = c.BodyParser(&news)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Failed to parse body")
+		}
+
+		// Get existing news record
+		record, err := db.FindByPrimaryKeyFrom(models.NewsTable, id)
+		if err != nil {
+			return c.Status(fiber.StatusNotFound).SendString("News with specified ID not found")
+		}
+		existingNews := record.(*models.NewsData)
+
+		// Update existingNews with new values from news
+		existingNews.Title = news.Title
+		existingNews.Content = news.Content
+		// Note: Update all the other fields as necessary
+
+		// Update news record in database
+		err = db.Update(existingNews)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news")
+		}
+
+		// Return updated news
+		return c.JSON(existingNews)
+	})
+}

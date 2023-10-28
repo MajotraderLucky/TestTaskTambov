@@ -37,8 +37,11 @@ func main() {
 	// Закрываем базу данных, когда завершим
 	defer db.Close()
 
-	// Устанавливаем маршруты для API
+	// Устанавливаем маршруты для API /list
 	fiberapi.SetupApiRouteGetList(app, rDB)
+
+	// Add news handler /edit/:id
+	fiberapi.SetupApiRouteEdit(app, rDB)
 
 	// Запускаем сервер на порту 3000
 	err = app.Listen(":3000")
