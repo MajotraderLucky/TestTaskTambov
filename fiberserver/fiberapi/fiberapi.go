@@ -125,9 +125,15 @@ func SetupApiRoutes(app *fiber.App, db *reform.DB) {
 }
 
 type NewsJson struct {
-	ID      int64  `json:"Id"`
-	Title   string `json:"Title"`
-	Content string `json:"Content"`
+	ID         int64   `json:"Id"`
+	Title      string  `json:"Title"`
+	Content    string  `json:"Content"`
+	Categories []int64 `json:"Categories"`
+}
+
+type ResponseJson struct {
+	Success bool       `json:"Success"`
+	News    []NewsJson `json:"News"`
 }
 
 func LoadNewsFromFile(filePath string, db *reform.DB) error {
@@ -167,10 +173,10 @@ func SetupApiRouteGetList(app *fiber.App, db *reform.DB) {
 		}
 
 		// Обход всех записей и преобразование их в нужный тип
-		newsList := make([]*models.NewsData, len(records))
+		newsList := make([]NewsJson, len(records))
 		for i, record := range records {
 			news := record.(*models.NewsData)
-			newsList[i] = news
+			apiNews := NewsJson{ID: news.ID, Title: news.Title, Content: news.Content}
 
 			// Запрос категорий для каждой новости
 			categories, err := db.FindAllFrom(models.NewsCategoryTable, "NewsId", news.ID)
@@ -181,11 +187,19 @@ func SetupApiRouteGetList(app *fiber.App, db *reform.DB) {
 
 			for _, cat := range categories {
 				category := cat.(*models.NewsCategory)
-				newsList[i].Categories = append(newsList[i].Categories, category.CategoryID)
+				apiNews.Categories = append(apiNews.Categories, category.CategoryID)
 			}
+
+			newsList[i] = apiNews
 		}
 
-		// Отправить ответ клиенту
-		return c.JSON(newsList)
+		// Создать и заполнить структуру ResponseJson
+		response := ResponseJson{
+			Success: len(records) != 0, // Успешно, если есть хотя бы одна новость.
+			News:    newsList,
+		}
+
+		// Отправить ответ клиенту.
+		return c.JSON(response)
 	})
 }
