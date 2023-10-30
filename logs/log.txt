@@ -1,100 +1,100 @@
-2023/10/28 07:22:03 <<< BEGIN 4.77732ms
-2023/10/28 07:22:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`]
-2023/10/28 07:22:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`] 5.192748ms
-2023/10/28 07:22:03 Successfully saved or updated newsData with ID 1.
-2023/10/28 07:22:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4]
-2023/10/28 07:22:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4] 878.19µs
-2023/10/28 07:22:03 Successfully saved or updated NewsCategory with NewsId 1 and CategoryId 4.
-2023/10/28 07:22:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`]
-2023/10/28 07:22:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`] 149.829µs
-2023/10/28 07:22:03 Successfully saved or updated newsData with ID 2.
-2023/10/28 07:22:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2]
-2023/10/28 07:22:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2] 101.746µs
-2023/10/28 07:22:03 Successfully saved or updated NewsCategory with NewsId 2 and CategoryId 2.
-2023/10/28 07:22:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`]
-2023/10/28 07:22:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`] 105.086µs
-2023/10/28 07:22:03 Successfully saved or updated newsData with ID 3.
-2023/10/28 07:22:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1]
-2023/10/28 07:22:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1] 97.746µs
-2023/10/28 07:22:03 Successfully saved or updated NewsCategory with NewsId 3 and CategoryId 1.
-2023/10/28 07:22:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`]
-2023/10/28 07:22:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`] 102.004µs
-2023/10/28 07:22:03 Successfully saved or updated newsData with ID 4.
-2023/10/28 07:22:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3]
-2023/10/28 07:22:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3] 95.179µs
-2023/10/28 07:22:03 Successfully saved or updated NewsCategory with NewsId 4 and CategoryId 3.
-2023/10/28 07:22:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`]
-2023/10/28 07:22:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`] 108.019µs
-2023/10/28 07:22:03 Successfully saved or updated newsData with ID 5.
-2023/10/28 07:22:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2]
-2023/10/28 07:22:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2] 94.162µs
-2023/10/28 07:22:03 Successfully saved or updated NewsCategory with NewsId 5 and CategoryId 2.
-2023/10/28 07:22:03 >>> COMMIT
-2023/10/28 07:22:03 <<< COMMIT 61.89µs
-2023/10/28 07:22:03 >>> BEGIN
-2023/10/28 07:22:03 <<< BEGIN 64.214µs
-2023/10/28 07:22:03 >>> SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News` 
-2023/10/28 07:22:03 <<< SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News`  149.973µs
-2023/10/28 07:22:03 >>> DELETE FROM `News` WHERE `id` = ? [28]
-2023/10/28 07:22:03 <<< DELETE FROM `News` WHERE `id` = ? [28] 188.761µs
-2023/10/28 07:22:03 Successfully deleted news with ID 28.
-2023/10/28 07:22:03 >>> COMMIT
-2023/10/28 07:22:03 <<< COMMIT 38.99452ms
-2023/10/28 07:22:03 >>> BEGIN
-2023/10/28 07:22:03 <<< BEGIN 378.407µs
-2023/10/28 07:22:03 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
-2023/10/28 07:22:03 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 1.059728ms
-2023/10/28 07:22:03 >>> COMMIT
-2023/10/28 07:22:03 <<< COMMIT 13.569821ms
+2023/10/30 04:13:50 <<< BEGIN 64.878291ms
+2023/10/30 04:13:50 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`]
+2023/10/30 04:13:50 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`] 167.762862ms
+2023/10/30 04:13:50 Successfully saved or updated newsData with ID 1.
+2023/10/30 04:13:50 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4]
+2023/10/30 04:13:50 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4] 21.62249ms
+2023/10/30 04:13:50 Successfully saved or updated NewsCategory with NewsId 1 and CategoryId 4.
+2023/10/30 04:13:50 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`]
+2023/10/30 04:13:50 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`] 1.835887ms
+2023/10/30 04:13:50 Successfully saved or updated newsData with ID 2.
+2023/10/30 04:13:50 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2]
+2023/10/30 04:13:50 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2] 1.309719ms
+2023/10/30 04:13:50 Successfully saved or updated NewsCategory with NewsId 2 and CategoryId 2.
+2023/10/30 04:13:50 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`]
+2023/10/30 04:13:50 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`] 1.545303ms
+2023/10/30 04:13:50 Successfully saved or updated newsData with ID 3.
+2023/10/30 04:13:50 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1]
+2023/10/30 04:13:50 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1] 1.314385ms
+2023/10/30 04:13:50 Successfully saved or updated NewsCategory with NewsId 3 and CategoryId 1.
+2023/10/30 04:13:50 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`]
+2023/10/30 04:13:50 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`] 1.08365ms
+2023/10/30 04:13:50 Successfully saved or updated newsData with ID 4.
+2023/10/30 04:13:50 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3]
+2023/10/30 04:13:50 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3] 1.111391ms
+2023/10/30 04:13:50 Successfully saved or updated NewsCategory with NewsId 4 and CategoryId 3.
+2023/10/30 04:13:50 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`]
+2023/10/30 04:13:50 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`] 1.045104ms
+2023/10/30 04:13:50 Successfully saved or updated newsData with ID 5.
+2023/10/30 04:13:50 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2]
+2023/10/30 04:13:50 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2] 1.41864ms
+2023/10/30 04:13:50 Successfully saved or updated NewsCategory with NewsId 5 and CategoryId 2.
+2023/10/30 04:13:50 >>> COMMIT
+2023/10/30 04:13:50 <<< COMMIT 1.076245ms
+2023/10/30 04:13:50 >>> BEGIN
+2023/10/30 04:13:50 <<< BEGIN 574.16µs
+2023/10/30 04:13:50 >>> SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News` 
+2023/10/30 04:13:50 <<< SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News`  12.884959ms
+2023/10/30 04:13:50 >>> DELETE FROM `News` WHERE `id` = ? [20]
+2023/10/30 04:13:50 <<< DELETE FROM `News` WHERE `id` = ? [20] 3.005786ms
+2023/10/30 04:13:50 Successfully deleted news with ID 20.
+2023/10/30 04:13:50 >>> COMMIT
+2023/10/30 04:13:50 <<< COMMIT 119.83415ms
+2023/10/30 04:13:50 >>> BEGIN
+2023/10/30 04:13:50 <<< BEGIN 1.436269ms
+2023/10/30 04:13:50 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/30 04:13:50 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 4.532866ms
+2023/10/30 04:13:50 >>> COMMIT
+2023/10/30 04:13:50 <<< COMMIT 126.392684ms
 
-2023/10/28 07:41:03 -------------------------------------------------------
-2023/10/28 07:41:03 >>> BEGIN
-2023/10/28 07:41:03 <<< BEGIN 5.531526ms
-2023/10/28 07:41:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`]
-2023/10/28 07:41:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`] 5.260697ms
-2023/10/28 07:41:03 Successfully saved or updated newsData with ID 1.
-2023/10/28 07:41:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4]
-2023/10/28 07:41:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4] 1.069974ms
-2023/10/28 07:41:03 Successfully saved or updated NewsCategory with NewsId 1 and CategoryId 4.
-2023/10/28 07:41:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`]
-2023/10/28 07:41:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`] 138.175µs
-2023/10/28 07:41:03 Successfully saved or updated newsData with ID 2.
-2023/10/28 07:41:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2]
-2023/10/28 07:41:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2] 99.72µs
-2023/10/28 07:41:03 Successfully saved or updated NewsCategory with NewsId 2 and CategoryId 2.
-2023/10/28 07:41:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`]
-2023/10/28 07:41:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`] 110.134µs
-2023/10/28 07:41:03 Successfully saved or updated newsData with ID 3.
-2023/10/28 07:41:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1]
-2023/10/28 07:41:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1] 142.485µs
-2023/10/28 07:41:03 Successfully saved or updated NewsCategory with NewsId 3 and CategoryId 1.
-2023/10/28 07:41:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`]
-2023/10/28 07:41:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`] 133.99µs
-2023/10/28 07:41:03 Successfully saved or updated newsData with ID 4.
-2023/10/28 07:41:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3]
-2023/10/28 07:41:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3] 96.3µs
-2023/10/28 07:41:03 Successfully saved or updated NewsCategory with NewsId 4 and CategoryId 3.
-2023/10/28 07:41:03 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`]
-2023/10/28 07:41:03 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`] 103.804µs
-2023/10/28 07:41:03 Successfully saved or updated newsData with ID 5.
-2023/10/28 07:41:03 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2]
-2023/10/28 07:41:03 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2] 93.052µs
-2023/10/28 07:41:03 Successfully saved or updated NewsCategory with NewsId 5 and CategoryId 2.
-2023/10/28 07:41:03 >>> COMMIT
-2023/10/28 07:41:03 <<< COMMIT 77.489µs
-2023/10/28 07:41:03 >>> BEGIN
-2023/10/28 07:41:03 <<< BEGIN 46.096µs
-2023/10/28 07:41:03 >>> SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News` 
-2023/10/28 07:41:03 <<< SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News`  143.674µs
-2023/10/28 07:41:03 >>> DELETE FROM `News` WHERE `id` = ? [29]
-2023/10/28 07:41:03 <<< DELETE FROM `News` WHERE `id` = ? [29] 204.036µs
-2023/10/28 07:41:03 Successfully deleted news with ID 29.
-2023/10/28 07:41:03 >>> COMMIT
-2023/10/28 07:41:03 <<< COMMIT 6.137862ms
-2023/10/28 07:41:03 >>> BEGIN
-2023/10/28 07:41:03 <<< BEGIN 70.246µs
-2023/10/28 07:41:03 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
-2023/10/28 07:41:03 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 174.099µs
-2023/10/28 07:41:03 >>> COMMIT
-2023/10/28 07:41:03 <<< COMMIT 5.378611ms
+2023/10/30 04:24:10 -------------------------------------------------------
+2023/10/30 04:24:10 >>> BEGIN
+2023/10/30 04:24:10 <<< BEGIN 78.076187ms
+2023/10/30 04:24:10 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`]
+2023/10/30 04:24:11 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [1, `Первая новость`, `Содержимое первой новости`, `Первая новость`, `Содержимое первой новости`] 530.939216ms
+2023/10/30 04:24:11 Successfully saved or updated newsData with ID 1.
+2023/10/30 04:24:11 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4]
+2023/10/30 04:24:11 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [1, 4, 4] 109.344688ms
+2023/10/30 04:24:11 Successfully saved or updated NewsCategory with NewsId 1 and CategoryId 4.
+2023/10/30 04:24:11 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`]
+2023/10/30 04:24:11 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [2, `Вторая новость`, `Содержимое второй новости`, `Вторая новость`, `Содержимое второй новости`] 1.555251ms
+2023/10/30 04:24:11 Successfully saved or updated newsData with ID 2.
+2023/10/30 04:24:11 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2]
+2023/10/30 04:24:11 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [2, 2, 2] 1.843868ms
+2023/10/30 04:24:11 Successfully saved or updated NewsCategory with NewsId 2 and CategoryId 2.
+2023/10/30 04:24:11 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`]
+2023/10/30 04:24:11 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [3, `Третья новость`, `Содержимое третьей новости`, `Третья новость`, `Содержимое третьей новости`] 3.194707ms
+2023/10/30 04:24:11 Successfully saved or updated newsData with ID 3.
+2023/10/30 04:24:11 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1]
+2023/10/30 04:24:11 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [3, 1, 1] 3.645757ms
+2023/10/30 04:24:11 Successfully saved or updated NewsCategory with NewsId 3 and CategoryId 1.
+2023/10/30 04:24:11 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`]
+2023/10/30 04:24:11 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [4, `Четвертая новость`, `Содержимое четвертой новости`, `Четвертая новость`, `Содержимое четвертой новости`] 2.890056ms
+2023/10/30 04:24:11 Successfully saved or updated newsData with ID 4.
+2023/10/30 04:24:11 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3]
+2023/10/30 04:24:11 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [4, 3, 3] 1.457488ms
+2023/10/30 04:24:11 Successfully saved or updated NewsCategory with NewsId 4 and CategoryId 3.
+2023/10/30 04:24:11 >>> INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`]
+2023/10/30 04:24:11 <<< INSERT INTO News (Id, Title, Content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE Title = ?, Content = ? [5, `Пятая новость`, `Содержимое пятой новости`, `Пятая новость`, `Содержимое пятой новости`] 2.116224ms
+2023/10/30 04:24:11 Successfully saved or updated newsData with ID 5.
+2023/10/30 04:24:11 >>> INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2]
+2023/10/30 04:24:11 <<< INSERT INTO NewsCategories (NewsId, CategoryId) VALUES (?, ?) ON DUPLICATE KEY UPDATE CategoryId = ? [5, 2, 2] 1.467543ms
+2023/10/30 04:24:11 Successfully saved or updated NewsCategory with NewsId 5 and CategoryId 2.
+2023/10/30 04:24:11 >>> COMMIT
+2023/10/30 04:24:11 <<< COMMIT 1.113809ms
+2023/10/30 04:24:11 >>> BEGIN
+2023/10/30 04:24:11 <<< BEGIN 890.466µs
+2023/10/30 04:24:11 >>> SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News` 
+2023/10/30 04:24:11 <<< SELECT `News`.`id`, `News`.`title`, `News`.`content` FROM `News`  26.662765ms
+2023/10/30 04:24:11 >>> DELETE FROM `News` WHERE `id` = ? [21]
+2023/10/30 04:24:11 <<< DELETE FROM `News` WHERE `id` = ? [21] 38.813768ms
+2023/10/30 04:24:11 Successfully deleted news with ID 21.
+2023/10/30 04:24:11 >>> COMMIT
+2023/10/30 04:24:11 <<< COMMIT 138.139555ms
+2023/10/30 04:24:11 >>> BEGIN
+2023/10/30 04:24:11 <<< BEGIN 1.660008ms
+2023/10/30 04:24:11 >>> INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`]
+2023/10/30 04:24:11 <<< INSERT INTO `News` (`title`, `content`) VALUES (?, ?) [`Sample Title`, `Sample Content`] 124.230473ms
+2023/10/30 04:24:11 >>> COMMIT
+2023/10/30 04:24:11 <<< COMMIT 183.876079ms
 

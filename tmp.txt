@@ -1,46 +1,34 @@
-func LoadNewsFromFile(filePath string, db *reform.DB) error {
-	file, err := os.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
+# Используем базовый образ Golang
+FROM golang:1.20 AS build
 
-	var newsJsonArr []NewsJson
-	err = json.Unmarshal(file, &newsJsonArr)
-	if err != nil {
-		return err
-	}
+# Устанавливаем рабочую директорию внутри контейнера
+WORKDIR /app
 
-	return db.InTransaction(func(tx *reform.TX) error {
-		var multiErr error
-		for _, n := range newsJsonArr {
-			news := &models.NewsData{
-				ID:      n.ID,
-				Title:   n.Title,
-				Content: n.Content,
-			}
+# Копируем файлы модулей зависимостей
+COPY go.mod go.sum ./
 
-			err := tx.Save(news)
-			if err != nil {
-				multiErr = multierr.Combine(multiErr, err)
-				log.Printf("Failed to save or update newsData with ID %v. Error: %v\n", n.ID, err)
-			} else {
-				log.Printf("Successfully saved or updated newsData with ID %v.\n", n.ID)
-				for _, cat := range n.Categories {
-					newsCategory := &models.NewsCategory{
-						NewsID:     n.ID,
-						CategoryID: cat,
-					}
+# Загружаем зависимости модуля
+RUN go mod download
 
-					err := tx.Save(newsCategory)
-					if err != nil {
-						multiErr = multierr.Combine(multiErr, err)
-						log.Printf("Failed to save news_categories with news ID %v and category ID %v. Error: %v\n", n.ID, cat, err)
-					} else {
-						log.Printf("Successfully saved news_categories with news ID %v and category ID %v.\n", n.ID, cat)
-					}
-				}
-			}
-		}
-		return multiErr
-	})
-}
+# Копируем все файлы проекта внутрь контейнера
+COPY . .
+
+# Собираем бинарный файл приложения
+RUN go build -o fiberserver
+
+# ------------------------------------------
+
+# Создаем окончательный контейнер
+FROM gcr.io/distroless/base-debian10
+
+# Копируем бинарный файл из предыдущего этапа
+COPY --from=build /app/fiberserver /
+
+# Устанавливаем переменную окружения для порта сервера
+ENV PORT=3000
+
+# Указываем порт, который должен быть открыт в контейнере
+EXPOSE $PORT
+
+# Запускаем сервер при старте контейнера
+CMD ["/fiberserver"]

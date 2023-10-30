@@ -7,6 +7,8 @@ WORKDIR /app
 # Копируем файлы модулей зависимостей
 COPY go.mod go.sum ./
 
+RUN apt-get update && apt-get install -y libc6-dev
+
 # Загружаем зависимости модуля
 RUN go mod download
 
@@ -19,7 +21,8 @@ RUN go build -o fiberserver
 # ------------------------------------------
 
 # Создаем окончательный контейнер
-FROM gcr.io/distroless/base-debian10
+#FROM gcr.io/distroless/base-debian11
+FROM ubuntu:latest
 
 # Копируем бинарный файл из предыдущего этапа
 COPY --from=build /app/fiberserver /
