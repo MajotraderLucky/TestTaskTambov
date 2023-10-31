@@ -207,7 +207,7 @@ func SetupApiRouteGetList(app *fiber.App, db *reform.DB) {
 func SetupApiRouteEdit(app *fiber.App, db *reform.DB) {
 	app.Post("/edit/:id", func(c *fiber.Ctx) error {
 		id, err := strconv.ParseInt(c.Params("id"), 10, 64)
-		if err != nil {
+		if err != nil || id <= 0 {
 			return c.Status(fiber.StatusBadRequest).SendString("Invalid ID")
 		}
 
@@ -229,7 +229,7 @@ func SetupApiRouteEdit(app *fiber.App, db *reform.DB) {
 		existingNews.Content = news.Content
 		// Note: Update all the other fields as necessary
 
-		// Update news record in database
+		// Update news record in the database
 		err = db.Update(existingNews)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news")
