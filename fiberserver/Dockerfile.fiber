@@ -7,6 +7,10 @@ WORKDIR /app
 # Копируем файлы модулей зависимостей
 COPY go.mod go.sum ./
 
+# Копируем private.pem в корневую директорию
+COPY private.pem /
+COPY public.pem /
+
 RUN apt-get update && apt-get install -y libc6-dev
 
 # Загружаем зависимости модуля
@@ -21,11 +25,12 @@ RUN go build -o fiberserver
 # ------------------------------------------
 
 # Создаем окончательный контейнер
-#FROM gcr.io/distroless/base-debian11
 FROM ubuntu:latest
 
-# Копируем бинарный файл из предыдущего этапа
+# Копируем бинарный файл и private.pem из предыдущего этапа
 COPY --from=build /app/fiberserver /
+COPY --from=build /private.pem /
+COPY --from=build /public.pem /
 
 # Устанавливаем переменную окружения для порта сервера
 ENV PORT=3000
