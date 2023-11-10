@@ -1,0 +1,92 @@
+func SetupApiRouteEdit(app *fiber.App, db *reform.DB) {
+	app.Post("/edit/:id", IsAuthorized, func(c *fiber.Ctx) error {
+		id, err := strconv.ParseInt(c.Params("id"), 10, 64)
+		if err != nil || id <= 0 {
+			return c.Status(fiber.StatusBadRequest).SendString("Invalid ID")
+		}
+
+		var news NewsJson
+		err = c.BodyParser(&news)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Failed to parse body")
+		}
+
+		// Get existing news record
+		record, err := db.FindByPrimaryKeyFrom(models.NewsTable, id)
+		if err != nil {
+			return c.Status(fiber.StatusNotFound).SendString("News with specified ID not found")
+		}
+		existingNews := record.(*models.NewsData)
+
+		// Update existingNews with new values from news
+		existingNews.Title = news.Title
+		existingNews.Content = news.Content
+		// Note: Update all the other fields as necessary
+
+		// Update news record in the database
+		err = db.Update(existingNews)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Failed to update news")
+		}
+
+		// Return updated news
+		return c.JSON(existingNews)
+	})
+}
+
+func IsAuthorized(c *fiber.Ctx) error {
+	authHeader := c.Get("Authorization")
+	if authHeader == "" {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": "Unauthorized",
+		})
+	}
+
+	tokenString := strings.TrimSpace(strings.TrimPrefix(authHeader, "Bearer "))
+
+	token, err := jwt.ParseWithClaims(tokenString, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+		c.Locals("user", claims.Username)
+		return c.Next()
+	} else {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": "Invalid token",
+		})
+	}
+}
+
+type MyCustomClaims struct {
+	Username string `json:"username"`
+	jwt.RegisteredClaims
+}
+
+// Suppose this function accepts a username, and you would fetch appropriate user details in a real-world application
+func NewCreateJWT(username string) (string, error) {
+	expirationTime := time.Now().Add(60 * time.Minute)
+
+	claims := &MyCustomClaims{
+		Username: username,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+
+	if err != nil {
+		return "", err
+	}
+
+	fmt.Println(tokenString)
+	return tokenString, nil
+}

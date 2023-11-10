@@ -44,7 +44,7 @@ func main() {
 	fiberapi.SetupApiRouteEdit(app, rDB)
 
 	// Show jwt token
-	jwtToken, err := fiberapi.GenerateJWTToken()
+	jwtToken, err := fiberapi.NewCreateJWT()
 	if err != nil {
 		log.Println(err)
 		return
@@ -59,4 +59,4 @@ func main() {
 	}
 }
 
-// curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTkxNjEyNDksIm5hbWUiOiJKb2huIERvZSIsInN1YiI6IjEyMzQ1Njc4OTAifQ.YjFcGpSub2fROKCuMlkIKcmr-YwJaMV59p1ARM4dcMOs2rwcDN2emv0SvNcvxMP4jzgoCq_h8udYsjZrs7PQXHYjJbnDaWkWbalklcOsrEUfd3gmzXe-tM9usUK7mOvGYR9rK64Gn21yy220SskqfXIEdVK200ynmdgsddFuiNDUM92SiwxDfisOkf51TmvfiXgy2f2mZ8V0esbn5sK9-ho9oP-YveiQSfT3KCW-2kEtKAxVnQW77t3fn81OpWtydgYtbgPhvCEcq9Dk-WTu7Xv-vcOU8i8zcczitZsOe780DxkJj47YWaHFFbOOA9OSPUc313K5GlDTnzlgzu-t9g" -d '{"title":"new title", "content":"new content777"}' http://127.0.0.1:3000/edit/2
+// curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGVVc2VyIiwiZXhwIjoxNjk5NjI0MTk0fQ.msNZyHBWLyutCvlUF4NNoGhM20y_NMrf0tnAtM6rd-Y" -d '{"title":"new title", "content":"new content777"}' http://127.0.0.1:3000/edit/2

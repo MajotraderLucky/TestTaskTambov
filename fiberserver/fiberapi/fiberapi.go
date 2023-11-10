@@ -2,6 +2,7 @@ package fiberapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -9,11 +10,13 @@ import (
 	"time"
 
 	"github.com/MajotraderLucky/TambovRepo/models.go"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v5"
 	"go.uber.org/multierr"
 	"gopkg.in/reform.v1"
 )
+
+var jwtKey = []byte("my_secret_key")
 
 func SetupApiRoutes(app *fiber.App, db *reform.DB) {
 	// Обновить новость по id
@@ -214,31 +217,6 @@ func SetupApiRouteEdit(app *fiber.App, db *reform.DB) {
 			return c.Status(fiber.StatusBadRequest).SendString("Invalid ID")
 		}
 
-		// Проверить наличие и валидность токена
-		tokenString := c.Get("Authorization")
-		if tokenString == "" {
-			return c.Status(fiber.StatusUnauthorized).SendString("Missing Authorization header")
-		}
-
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			// Загрузить открытый ключ RSA из файла public.pem
-			publicKeyFile, err := os.ReadFile("public.pem")
-			if err != nil {
-				return nil, err
-			}
-
-			publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyFile)
-			if err != nil {
-				return nil, err
-			}
-
-			return publicKey, nil
-		})
-
-		if err != nil || !token.Valid {
-			return c.Status(fiber.StatusUnauthorized).SendString("Invalid token")
-		}
-
 		var news NewsJson
 		err = c.BodyParser(&news)
 		if err != nil {
@@ -268,27 +246,6 @@ func SetupApiRouteEdit(app *fiber.App, db *reform.DB) {
 	})
 }
 
-func CreateToken(id uint64) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.StandardClaims{
-		Id:        strconv.FormatUint(id, 10),
-		ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
-		IssuedAt:  time.Now().Unix(),
-		NotBefore: time.Now().Unix(),
-	})
-
-	privateKeyBytes, err := os.ReadFile("private.pem")
-	if err != nil {
-		return "", err
-	}
-
-	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyBytes)
-	if err != nil {
-		return "", err
-	}
-
-	return token.SignedString(privateKey)
-}
-
 func IsAuthorized(c *fiber.Ctx) error {
 	authHeader := c.Get("Authorization")
 	if authHeader == "" {
@@ -298,53 +255,48 @@ func IsAuthorized(c *fiber.Ctx) error {
 	}
 
 	tokenString := strings.TrimSpace(strings.TrimPrefix(authHeader, "Bearer "))
-	token, err := jwt.ParseWithClaims(tokenString, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		publicKeyBytes, err := os.ReadFile("public.pem")
-		if err != nil {
-			return nil, err
-		}
 
-		publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyBytes)
-		if err != nil {
-			return nil, err
-		}
-
-		return publicKey, nil
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (any, error) {
+		return jwtKey, nil
 	})
 
-	if err != nil || !token.Valid {
+	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"error": "Unauthorized",
+			"error": err.Error(),
+		})
+	}
+
+	if !token.Valid {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"error": "Invalid token",
 		})
 	}
 
 	return c.Next()
 }
 
-func GenerateJWTToken() (string, error) {
-	// Здесь необходимо указать данные для создания токена
-	claims := jwt.MapClaims{
-		"sub":  "1234567890",      // идентификатор пользователя
-		"name": "John Doe",        // имя пользователя
-		"iat":  time.Now().Unix(), // время выпуска токена
+type MyCustomClaims struct {
+	Username string `json:"username"`
+	jwt.RegisteredClaims
+}
+
+func NewCreateJWT() (string, error) {
+	expirationTime := time.Now().Add(60 * time.Minute)
+
+	claims := &MyCustomClaims{
+		Username: "exampleUser",
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
 	}
 
-	// Загрузка приватного ключа из файла
-	privateKeyBytes, err := os.ReadFile("private.pem")
-	if err != nil {
-		return "", err
-	}
-	privateKey, err := jwt.ParseRSAPrivateKeyFromPEM(privateKeyBytes)
-	if err != nil {
-		return "", err
-	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
 
-	// Создание JWT-токена с помощью приватного ключа
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
-	jwtToken, err := token.SignedString(privateKey)
 	if err != nil {
 		return "", err
 	}
 
-	return jwtToken, nil
+	fmt.Println(tokenString)
+	return tokenString, nil
 }
